@@ -42,11 +42,16 @@ INSTALLED_APPS = [
     ## External
     'rest_framework',
     'rest_framework_simplejwt',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'crispy_forms',
+    'django_countries',
     # 'drf_yasg',
     
 
     ## Internal
-    '_auth',
+    # '_auth',
     'ecommerce'
 ]
 
@@ -91,7 +96,7 @@ TEMPLATES = [
     },
 ]
 
-AUTH_USER_MODEL = "_auth.CustomUser"
+# AUTH_USER_MODEL = "_auth.CustomUser"
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
@@ -153,3 +158,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL = '/'
+SIGNUP_REDIRECT_URL = '/'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+ACCOUNT_AUTHENTICATION_METHOD = 'username'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'none'

@@ -3,7 +3,7 @@ from django.views.generic import ListView, DetailView, View
 from django.contrib import messages
 from .models import *
 from django.core.exceptions import ObjectDoesNotExist
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 class HomeView(View):
     def get(self, *args, **kwargs):
         items = Item.objects.all()
@@ -13,7 +13,7 @@ class HomeView(View):
         return render(self.request, 'index.html', context)
 
 
-class ItemDetailView(DetailView):
+class ItemDetailView(LoginRequiredMixin, DetailView):
     model = Item
     template_name = "item.html"
 
@@ -46,7 +46,7 @@ def add_to_cart(request, slug):
         return redirect('order_summary')
 
 
-class OrderSummaryView(View):
+class OrderSummaryView(LoginRequiredMixin, View):
     def get(self, *args, **kwargs):
         try:
             order = Order.objects.get(user=self.request.user, ordered=False)

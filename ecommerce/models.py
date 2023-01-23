@@ -1,5 +1,6 @@
 from django.db import models
-from _auth.models import CustomUser
+# from _auth.models import CustomUser
+from django.contrib.auth.models import User
 
 
 class Item(models.Model):
@@ -15,7 +16,7 @@ class Item(models.Model):
 
 
 class OrderItem(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     ordered = models.BooleanField(default=False)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
@@ -27,7 +28,7 @@ class OrderItem(models.Model):
         return self.item.price * self.quantity
 
 class Order(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     items = models.ManyToManyField(OrderItem)
     ordered = models.BooleanField(default=False)
     ordered_date = models.DateTimeField(auto_now=True)
