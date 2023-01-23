@@ -22,6 +22,9 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return f"{self.quantity} of {self.item.title}"
+    
+    def get_item_price(self):
+        return self.item.price * self.quantity
 
 class Order(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
@@ -30,4 +33,10 @@ class Order(models.Model):
     ordered_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.user.username
+        return self.user.email
+    
+    def get_total(self):
+        total = 0
+        for order_item in self.items.all():
+            total += order_item.get_item_price()
+        return total
