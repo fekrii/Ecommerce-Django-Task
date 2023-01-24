@@ -1,0 +1,22 @@
+version: "3.9"
+services:
+
+  app:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - 7000:7000
+    command: python /app/manage.py runserver 0.0.0.0:7000
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:alpine
+    container_name: redis_db
+    command: redis-server --appendonly yes
+    ports:
+      - 6379:6379
+    volumes:
+      - ./data:/data
+    restart: always

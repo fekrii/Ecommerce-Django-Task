@@ -1,14 +1,19 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, HttpResponse
 from django.views.generic import ListView, DetailView, View
 from django.contrib import messages
 from .models import *
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.mixins import LoginRequiredMixin
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
+from notifications.models import OrderNotification
+from datetime import datetime
 class HomeView(View):
     def get(self, *args, **kwargs):
         items = Item.objects.all()
         context = {
-            "items":items
+            "items":items,
+            "room_name": "orderComplete"
         }
         return render(self.request, 'index.html', context)
 
@@ -16,6 +21,7 @@ class HomeView(View):
 class ItemDetailView(LoginRequiredMixin, DetailView):
     model = Item
     template_name = "item.html"
+
 
 
 def add_to_cart(request, slug):
@@ -36,6 +42,7 @@ def add_to_cart(request, slug):
         else:
             order.items.add(order_item)
             messages.success(request, f"{item} was added to your cart")
+            OrderNotification.objects.create(message="order adde to cart", time=datetime.now(), sent=True)
             return redirect('order_summary')
     else:
         # ordered_date = timezone.now()
@@ -43,6 +50,7 @@ def add_to_cart(request, slug):
             user=request.user, ordered=False)  # ordered_date=ordered_date)
         order.items.add(order_item)
         messages.success(request, f"{item} was added to your cart")
+        OrderNotification.objects.create(message="order adde to cart", time=datetime.now(), sent=True)
         return redirect('order_summary')
 
 
@@ -54,6 +62,7 @@ class OrderSummaryView(LoginRequiredMixin, View):
                 'orders': order,
                 'user':self.request.user
             }
+
             return render(self.request, 'cart.html', context)
         except ObjectDoesNotExist:
             messages.info(self.request, "You don't have an active order!")
