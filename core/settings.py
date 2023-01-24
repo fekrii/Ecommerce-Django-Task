@@ -33,7 +33,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'channels',
-    # 'daphne',  ## instead of channels to solve version issue 
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,15 +45,11 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'allauth',
     'allauth.account',
-    'allauth.socialaccount',
     'crispy_forms',
-    'django_countries',
 
-    # 'drf_yasg',
     
 
     ## Internal
-    # '_auth',
     'ecommerce',
     'notifications'
 ]
@@ -103,7 +98,7 @@ TEMPLATES = [
     },
 ]
 
-# AUTH_USER_MODEL = "_auth.CustomUser"
+
 
 WSGI_APPLICATION = 'core.wsgi.application'
 

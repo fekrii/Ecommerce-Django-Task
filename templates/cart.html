@@ -190,7 +190,7 @@ return chargeRequest;
   function checkout() {
     const configuration = {
       locale : "en",  //default en
-      mode: DISPLAY_MODE.POPUP,  //required, allowed values [POPUP, INSIDE_PAGE, SIDE_PAGE , SEPARATED]
+      mode: DISPLAY_MODE.POPUP, 
   };
 FawryPay.checkout(buildChargeRequest(), configuration);
 }

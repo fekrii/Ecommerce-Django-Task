@@ -45,7 +45,6 @@ def add_to_cart(request, slug):
             OrderNotification.objects.create(message="order adde to cart", time=datetime.now(), sent=True)
             return redirect('order_summary')
     else:
-        # ordered_date = timezone.now()
         order = Order.objects.create(
             user=request.user, ordered=False)  # ordered_date=ordered_date)
         order.items.add(order_item)
