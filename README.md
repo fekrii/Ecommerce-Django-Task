@@ -27,7 +27,7 @@
 
 
 
-This project is a Simple Django Ecommerce App, it uses Django, Django-templates, channels , redis for ntification featuresand FAWRY Integeration Payment<br>
+This project is a Simple Django Ecommerce App, it uses Django, Django-templates, channels , redis for ntification features and FAWRY Integeration Payment<br>
 
 you can run it locally, or with docker-compose
 
